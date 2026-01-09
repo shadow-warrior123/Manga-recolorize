@@ -18,7 +18,7 @@ safetensors==0.4.2
 xformers==0.0.24  # Matches torch 2.2.0
 
 # Image Processing
-opencv-python-headless==4.8.1.78  # More stable version for server
+opencv-python-headless==4.7.0.72  # Stable version to avoid 'cv2.gapi' errors
 Pillow==10.2.0
 numpy==1.26.4
 scikit-learn==1.4.0
