@@ -1,0 +1,39 @@
+# Core API
+fastapi==0.109.0
+uvicorn[standard]==0.27.0
+python-multipart==0.0.6
+pydantic==2.6.0
+
+# Redis (optional for job state)
+redis==5.0.1
+
+# ML/Deep Learning (pinned for CUDA 12.1 / A100)
+# Assumes CUDA 12.1
+torch==2.2.0
+torchvision==0.17.0
+diffusers==0.26.3
+transformers==4.38.1
+accelerate==0.27.2
+safetensors==0.4.2
+xformers==0.0.24  # Matches torch 2.2.0
+
+# Image Processing
+opencv-python-headless==4.9.0.80  # Headless for server
+Pillow==10.2.0
+numpy==1.26.4
+scikit-learn==1.4.0
+scipy==1.12.0
+
+# Text Detection
+craft-text-detector==0.4.3
+
+# Upscaling (pinned known good versions)
+realesrgan==0.3.0
+basicsr>=1.4.2
+
+# Configuration
+PyYAML==6.0.1
+
+# Utilities
+tqdm==4.66.1
+loguru==0.7.2

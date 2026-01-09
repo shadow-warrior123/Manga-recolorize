@@ -1,0 +1,72 @@
+# Manga Colorizer Model Configuration
+
+# SDXL Base Model
+# SDXL Base Model
+sdxl:
+  # Premium Anime Model
+  model_id: "cagliostrolab/animagine-xl-3.1"
+  # dtype: "auto" (detects BF16/FP16), "float16", "bfloat16", or "float32"
+  torch_dtype: "auto"
+  use_safetensors: true
+  variant: "fp16"
+  enable_xformers: true
+
+# ControlNet for Line Art
+controlnet:
+  model_id: "lllyasviel/sd-controlnet-lineart"
+  # Slightly reduced to allow more style bleed-through
+  conditioning_scale: 0.7
+  guess_mode: false
+
+# Text Detection (CRAFT)
+text_detection:
+  use_cuda: true
+  refine: true
+  text_threshold: 0.7
+  link_threshold: 0.4
+  low_text: 0.4
+
+# Real-ESRGAN Upscaling
+upscaler:
+  enable: true
+  model_name: "RealESRGAN_x4plus_anime_6B"
+  scale: 4
+  denoise_strength: 0.5
+  tile: 256
+  tile_pad: 10
+
+# Style Extraction
+style:
+  palette_colors: 8
+  lighting_threshold: 0.5
+  shading_strength_default: 0.7
+
+# Inference Settings
+inference:
+  seed: 42
+  num_inference_steps: 30
+  # Higher guidance for anime models to stick to style
+  guidance_scale: 8.0
+  negative_prompt: "blurry, low quality, distorted, watermark, signature"
+  image_size: 1024
+
+# High-Res Refinement (Img2Img)
+refinement:
+  enable: true
+  strength: 0.35      # Denoising strength (0.3-0.4 is sweet spot)
+  scale_factor: 1.5   # Internal upscale before refinement
+
+# Storage Paths (relative to project root)
+# Storage Paths (relative to project root)
+storage:
+  inputs_dir: "input_manga"
+  references_dir: "reference_pages"
+  outputs_dir: "output_pages"
+  temp_dir: "storage/temp"
+
+# GPU Settings
+gpu:
+  device: "cuda"
+  enable_attention_slicing: true
+  enable_vae_tiling: true
+  offload_to_cpu: false

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MangaColor AI | Premium Colorization Platform</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dark-theme">
+    <div class="glow-bg"></div>
+    
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-palette"></i>
+                <span>Manga<span>Color</span> AI</span>
+            </div>
+            <div class="nav-status" id="api-status">
+                <span class="status-dot"></span>
+                <span class="status-text">Checking API...</span>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container main-content">
+        <header class="hero-section">
+            <h1>Elevate Your Manga with <span>AI Colorization</span></h1>
+            <p>High-fidelity, style-adaptive colorization powered by SDXL and ControlNet.</p>
+        </header>
+
+        <section class="workflow-container">
+            <!-- Step 1: Create Job -->
+            <div class="card glass" id="step-1">
+                <div class="card-header">
+                    <div class="step-num">01</div>
+                    <h2>Initialize Project</h2>
+                </div>
+                <div class="card-body">
+                    <p>Start a new colorization session to begin processing your manga pages.</p>
+                    <button id="btn-create-job" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Create New Job
+                    </button>
+                    <div id="job-info" class="job-id-display hidden">
+                        Job ID: <span id="current-job-id"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2: Upload Files -->
+            <div class="card glass disabled" id="step-2">
+                <div class="card-header">
+                    <div class="step-num">02</div>
+                    <h2>Source & References</h2>
+                </div>
+                <div class="card-body grid-2">
+                    <div class="upload-zone" id="zone-pages">
+                        <i class="fas fa-file-image"></i>
+                        <h3>Manga Pages</h3>
+                        <p>Upload B&W pages</p>
+                        <input type="file" id="input-pages" multiple accept="image/*" hidden>
+                        <button class="btn btn-outline" onclick="document.getElementById('input-pages').click()">Select Files</button>
+                        <div class="file-count" id="count-pages">0 files</div>
+                    </div>
+                    <div class="upload-zone" id="zone-refs">
+                        <i class="fas fa-wand-magic-sparkles"></i>
+                        <h3>Style References</h3>
+                        <p>Upload colored art</p>
+                        <input type="file" id="input-refs" multiple accept="image/*" hidden>
+                        <button class="btn btn-outline" onclick="document.getElementById('input-refs').click()">Select Files</button>
+                        <div class="file-count" id="count-refs">0 files</div>
+                    </div>
+                </div>
+                <div class="card-footer hidden" id="footer-upload">
+                    <button id="btn-upload-all" class="btn btn-secondary">
+                        <i class="fas fa-cloud-upload-alt"></i> Upload All Assets
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 3: Run & Status -->
+            <div class="card glass disabled" id="step-3">
+                <div class="card-header">
+                    <div class="step-num">03</div>
+                    <h2>Process & Monitor</h2>
+                </div>
+                <div class="card-body">
+                    <div class="process-controls">
+                        <div class="options-grid">
+                            <div class="option">
+                                <label for="opt-upscale">Upscale (2x)</label>
+                                <input type="checkbox" id="opt-upscale" class="toggle">
+                            </div>
+                            <div class="option">
+                                <label for="opt-method">Lineart</label>
+                                <select id="opt-method">
+                                    <option value="adaptive">Adaptive</option>
+                                    <option value="canny">Canny</option>
+                                    <option value="xdog">XDoG</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button id="btn-run-job" class="btn btn-success btn-large">
+                            <i class="fas fa-play"></i> Start Colorization
+                        </button>
+                    </div>
+
+                    <div id="status-display" class="status-container hidden">
+                        <div class="progress-info">
+                            <span id="job-status-text">Processing...</span>
+                            <span id="job-progress-percent">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div id="progress-fill" style="width: 0%"></div>
+                        </div>
+                        <div class="status-stats">
+                            <span>Completed: <span id="pages-completed">0</span></span>
+                            <span>Failed: <span id="pages-failed">0</span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final Results -->
+        <section id="results-section" class="results-container hidden">
+            <div class="section-header">
+                <h2>Colorization Results</h2>
+                <div class="actions">
+                    <button id="btn-refresh-results" class="btn btn-icon"><i class="fas fa-sync"></i></button>
+                </div>
+            </div>
+            <div id="results-grid" class="results-grid">
+                <!-- Results will be injected here -->
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <p>&copy; 2026 MangaColor AI Platform. Powered by Advanced Generative AI.</p>
+    </footer>
+
+    <!-- Overlay Loader -->
+    <div id="global-loader" class="loader-overlay hidden">
+        <div class="loader"></div>
+        <p id="loader-text">Loading...</p>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
