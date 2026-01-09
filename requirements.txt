@@ -26,10 +26,11 @@ scipy==1.12.0
 
 # Text Detection
 craft-text-detector==0.4.3
+huggingface-hub==0.25.2  # Fixes 'cached_download' error
 
 # Upscaling (pinned known good versions)
 realesrgan==0.3.0
-basicsr>=1.4.2
+basicsr==1.4.2
 
 # Configuration
 PyYAML==6.0.1
