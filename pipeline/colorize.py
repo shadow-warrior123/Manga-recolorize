@@ -13,6 +13,15 @@ import numpy as np
 import torch
 from PIL import Image
 
+# Compatibility Patch for old libraries (facexlib/basicsr) 
+# that still look for 'cached_download' in newer huggingface_hub
+try:
+    import huggingface_hub
+    if not hasattr(huggingface_hub, 'cached_download'):
+        huggingface_hub.cached_download = huggingface_hub.hf_hub_download
+except ImportError:
+    pass
+
 from . import device as device_utils
 
 logger = logging.getLogger(__name__)
