@@ -163,10 +163,20 @@ def load_models(
             logger.info("Enabled CPU offload")
         
         # Create Refinement Pipeline (Img2Img)
-        # Shares the same components, so zero extra VRAM
         from diffusers import StableDiffusionXLImg2ImgPipeline
         
-        refine_pipe = StableDiffusionXLImg2ImgPipeline.from_pipe(pipe)
+        # Manually transfer components to avoid from_pipe() attribute errors
+        refine_pipe = StableDiffusionXLImg2ImgPipeline(
+            vae=pipe.vae,
+            text_encoder=pipe.text_encoder,
+            text_encoder_2=pipe.text_encoder_2,
+            tokenizer=pipe.tokenizer,
+            tokenizer_2=pipe.tokenizer_2,
+            unet=pipe.unet,
+            scheduler=pipe.scheduler,
+            force_zeros_for_empty_prompt=pipe.config.force_zeros_for_empty_prompt if hasattr(pipe.config, 'force_zeros_for_empty_prompt') else True,
+            add_watermarker=getattr(pipe, "add_watermarker", None),
+        )
         
         models = {
             "pipeline": pipe,
