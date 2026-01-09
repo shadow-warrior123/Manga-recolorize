@@ -29,10 +29,7 @@ venv*/
 
 # Project Storage
 storage/
-input_manga/*
-!input_manga/.gitkeep
-reference_pages/*
-!reference_pages/.gitkeep
+# input_manga/ and reference_pages/ are now tracked per user request
 output_pages/*
 !output_pages/.gitkeep
 test_output/
