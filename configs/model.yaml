@@ -12,10 +12,11 @@ sdxl:
   enable_xformers: true
 
 # ControlNet for Line Art
+# ControlNet for Line Art (SDXL Version)
 controlnet:
-  model_id: "lllyasviel/sd-controlnet-lineart"
+  model_id: "TheMistoAI/MistoLine" # SDXL optimized for Anime Lineart
   # Slightly reduced to allow more style bleed-through
-  conditioning_scale: 0.7
+  conditioning_scale: 0.6
   guess_mode: false
 
 # Text Detection (CRAFT)
